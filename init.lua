@@ -26,7 +26,7 @@ local config = {
   },
 
   -- Set colorscheme to use
-  colorscheme = "default_theme",
+  colorscheme = "everforest",
 
   -- Override highlight groups in any theme
   highlights = {
@@ -48,6 +48,8 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
+      everforest_better_performance = 1,
+      everforest_background = "medium",
     },
   },
   -- If you need more control, you can use the function()...end notation
@@ -87,7 +89,7 @@ local config = {
     -- enable or disable highlighting for extra plugins
     plugins = {
       aerial = true,
-      beacon = false,
+      beacon = true,
       bufferline = true,
       dashboard = true,
       highlighturl = true,
@@ -185,24 +187,7 @@ local config = {
       -- You can disable default plugins as follows:
       -- ["goolord/alpha-nvim"] = { disable = true },
 
-      -- You can also add new plugins here as well:
-      -- Add plugins, the packer syntax without the "use"
-      -- { "andweeb/presence.nvim" },
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
-
-      -- We also support a key value style plugin definition similar to NvChad:
-      -- ["ray-x/lsp_signature.nvim"] = {
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
+      { "sainnhe/everforest" },
     },
     -- All other entries override the require("<key>").setup({...}) call for default plugins
     ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
