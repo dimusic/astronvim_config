@@ -110,6 +110,8 @@ local config = {
 
   -- Extend LSP configuration
   lsp = {
+    skip_setup = { "rust_analyzer" },
+
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
@@ -179,10 +181,17 @@ local config = {
   -- Configure plugins
   plugins = {
     init = {
-      -- You can disable default plugins as follows:
-      -- ["goolord/alpha-nvim"] = { disable = true },
-
       { "sainnhe/everforest" },
+      { "RRethy/vim-illuminate" },
+      {
+        "simrat39/rust-tools.nvim",
+        after = "mason-lspconfig.nvim", -- make sure to load after mason-lspconfig
+        config = function()
+          require("rust-tools").setup {
+            server = astronvim.lsp.server_settings "rust_analyzer", -- get the server settings and built in capabilities/on_attach
+          }
+        end,
+      },
     },
 
     -- All other entries override the require("<key>").setup({...}) call for default plugins
@@ -215,8 +224,9 @@ local config = {
     },
     -- use mason-lspconfig to configure LSP installations
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-      ensure_installed = { "sumneko_lua" },
+      ensure_installed = { "sumneko_lua", "rust_analyzer" },
     },
+
     -- use mason-tool-installer to configure DAP/Formatters/Linter installation
     ["mason-tool-installer"] = { -- overrides `require("mason-tool-installer").setup(...)`
       ensure_installed = { "prettier", "stylua" },
@@ -254,6 +264,7 @@ local config = {
   cmp = {
     source_priority = {
       nvim_lsp = 1000,
+      nvim_lsp_signature_help = 900,
       luasnip = 750,
       buffer = 500,
       path = 250,
