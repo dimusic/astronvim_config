@@ -228,6 +228,14 @@ local config = {
     packer = { -- overrides `require("packer").setup(...)`
       compile_path = vim.fn.stdpath "data" .. "/packer_compiled.lua",
     },
+
+    aerial = {
+      on_attach = function()
+        -- Jump up the tree with '[[' or ']]'
+        vim.keymap.set("n", "[[", "<cmd>AerialPrevUp<cr>", { buffer = bufnr, desc = "Jump up and backwards in Aerial" })
+        vim.keymap.set("n", "]]", "<cmd>AerialNextUp<cr>", { buffer = bufnr, desc = "Jump up and forwards in Aerial" })
+      end,
+    },
   },
 
   -- LuaSnip Options
