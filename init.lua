@@ -117,6 +117,7 @@ local config = {
     -- easily add or disable built in mappings added during LSP attaching
     mappings = {
       n = {
+        ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
         -- ["<leader>lf"] = false -- disable formatting keymap
       },
     },
@@ -183,6 +184,7 @@ local config = {
 
       { "sainnhe/everforest" },
     },
+
     -- All other entries override the require("<key>").setup({...}) call for default plugins
     ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
       -- config variable is the default configuration table for the setup functino call
@@ -223,6 +225,7 @@ local config = {
       compile_path = vim.fn.stdpath "data" .. "/packer_compiled.lua",
     },
 
+    -- Aerial
     aerial = {
       on_attach = function()
         -- Jump up the tree with '[[' or ']]'
