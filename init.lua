@@ -192,6 +192,13 @@ local config = {
           }
         end,
       },
+
+      {
+        "tzachar/cmp-tabnine",
+        run = "./install.sh",
+        requires = "hrsh7th/nvim-cmp",
+        config = function() astronvim.add_user_cmp_source "cmp_tabnine" end,
+      },
     },
 
     -- All other entries override the require("<key>").setup({...}) call for default plugins
@@ -263,6 +270,7 @@ local config = {
   -- true == 1000
   cmp = {
     source_priority = {
+      cmp_tabnine = 1200,
       nvim_lsp = 1000,
       nvim_lsp_signature_help = 900,
       luasnip = 750,
