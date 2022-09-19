@@ -211,7 +211,7 @@ local config = {
       config.sources = {
         -- Set a formatter
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettierd.with { extra_args = { "--print-width=120", "--tab-width=4" } },
       }
       -- set up null-ls's on_attach function
       -- NOTE: You can remove this on attach function to disable format on save
