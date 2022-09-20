@@ -4,6 +4,17 @@
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
+local lspkind = require "lspkind"
+-- local cmp_compare = require "cmp.config.compare"
+
+local source_mapping = {
+  cmp_tabnine = "[TN]",
+  nvim_lsp = "λ",
+  vsnip = "⋗",
+  buffer = "Ω",
+  path = "🖫",
+}
+
 local config = {
 
   -- Configure AstroNvim updates
@@ -192,7 +203,20 @@ local config = {
           }
         end,
       },
+      {
+        "kylechui/nvim-surround",
+        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+        config = function()
+          require("nvim-surround").setup {
+            -- Configuration here, or leave empty to use defaults
+          }
+        end,
+      },
 
+      {
+        "ray-x/lsp_signature.nvim",
+        config = function() require("lsp_signature").setup {} end,
+      },
       {
         "tzachar/cmp-tabnine",
         run = "./install.sh",
@@ -244,11 +268,57 @@ local config = {
 
     -- Aerial
     aerial = {
-      on_attach = function()
+      on_attach = function(_, bufnr)
         -- Jump up the tree with '[[' or ']]'
         vim.keymap.set("n", "[[", "<cmd>AerialPrevUp<cr>", { buffer = bufnr, desc = "Jump up and backwards in Aerial" })
         vim.keymap.set("n", "]]", "<cmd>AerialNextUp<cr>", { buffer = bufnr, desc = "Jump up and forwards in Aerial" })
       end,
+    },
+
+    telescope = {
+      defaults = {
+        sorting_strategy = "descending",
+        layout_config = {
+          horizontal = {
+            prompt_position = "bottom",
+          },
+        },
+      },
+    },
+
+    cmp = {
+      formatting = {
+        fields = { "menu", "abbr", "kind" },
+        format = function(entry, vim_item)
+          vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
+          vim_item.menu = source_mapping[entry.source.name]
+          if entry.source.name == "cmp_tabnine" then
+            local detail = (entry.completion_item.data or {}).detail
+            vim_item.kind = ""
+            if detail and detail:find ".*%%.*" then vim_item.kind = vim_item.kind .. " " .. detail end
+
+            if (entry.completion_item.data or {}).multiline then vim_item.kind = vim_item.kind .. " " .. "[ML]" end
+          end
+          local maxwidth = 80
+          vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+          return vim_item
+        end,
+      },
+
+      -- sorting = {
+      --   priority_weight = 2,
+      --   comparators = {
+      --     require "cmp_tabnine.compare",
+      --     cmp_compare.offset,
+      --     cmp_compare.exact,
+      --     cmp_compare.score,
+      --     cmp_compare.recently_used,
+      --     cmp_compare.kind,
+      --     cmp_compare.sort_text,
+      --     cmp_compare.length,
+      --     cmp_compare.order,
+      --   },
+      -- },
     },
   },
 
@@ -323,5 +393,10 @@ local config = {
     -- }
   end,
 }
+
+vim.cmd [[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]]
 
 return config
