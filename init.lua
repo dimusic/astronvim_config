@@ -336,6 +336,10 @@ local config = {
       --   },
       -- },
     },
+
+    cinnamon = {
+      default_delay = 3,
+    },
   },
 
   -- LuaSnip Options
