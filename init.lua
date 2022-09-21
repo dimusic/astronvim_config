@@ -182,6 +182,8 @@ local config = {
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
       -- quick save
       -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+
+      ["<C-w>z"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize window" },
     },
     t = {
       -- setting a mapping to false will disable it
@@ -222,6 +224,20 @@ local config = {
         run = "./install.sh",
         requires = "hrsh7th/nvim-cmp",
         config = function() astronvim.add_user_cmp_source "cmp_tabnine" end,
+      },
+
+      {
+        "anuvyklack/windows.nvim",
+        requires = {
+          "anuvyklack/middleclass",
+          "anuvyklack/animation.nvim",
+        },
+        config = function()
+          vim.o.winwidth = 10
+          vim.o.winminwidth = 10
+          vim.o.equalalways = false
+          require("windows").setup()
+        end,
       },
     },
 
