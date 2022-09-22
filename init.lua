@@ -239,6 +239,8 @@ local config = {
           require("windows").setup()
         end,
       },
+
+      { "vim-scripts/zoom.vim" },
     },
 
     -- All other entries override the require("<key>").setup({...}) call for default plugins
