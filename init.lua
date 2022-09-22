@@ -414,6 +414,8 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
     if vim.fn.has "win32" then vim.opt.guifont = { "FiraCode NF", ":h" .. font_size } end
     if vim.loop.os_uname().sysname == "Darwin" then vim.opt.guifont = { "FiraCode Nerd Font", ":h" .. font_size } end
 
+    vim.g.neovide_remember_window_size = true
+
     -- Set up custom filetypes
     -- vim.filetype.add {
     --   extension = {
