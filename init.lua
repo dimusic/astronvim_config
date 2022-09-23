@@ -131,6 +131,8 @@ local config = {
     mappings = {
       n = {
         ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
+        ["<leader>o"] = { "<cmd>Neotree reveal<cr>", desc = "Reveal File in the Explorer" },
+
         -- ["<leader>lf"] = false -- disable formatting keymap
       },
     },
@@ -241,6 +243,13 @@ local config = {
       },
 
       { "vim-scripts/zoom.vim" },
+    },
+
+    ["neo-tree"] = {
+      enable_diagnostics = true,
+      filesystem = {
+        follow_current_file = false,
+      },
     },
 
     -- All other entries override the require("<key>").setup({...}) call for default plugins
