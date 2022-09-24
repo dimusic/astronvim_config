@@ -131,7 +131,6 @@ local config = {
     mappings = {
       n = {
         ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
-        ["<leader>o"] = { "<cmd>Neotree reveal<cr>", desc = "Reveal File in the Explorer" },
 
         -- ["<leader>lf"] = false -- disable formatting keymap
       },
@@ -412,6 +411,12 @@ local config = {
 
     --Disable esc key mapping in terminal
     vim.keymap.del("t", "<esc>")
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>o",
+      "<cmd>Neotree reveal<cr>",
+      { noremap = true, silent = true, desc = "Reveal File in the Explorer" }
+    )
 
     vim.cmd [[
 set signcolumn=yes
