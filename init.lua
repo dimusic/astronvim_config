@@ -248,6 +248,10 @@ local config = {
       enable_diagnostics = true,
       filesystem = {
         follow_current_file = false,
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+        },
       },
     },
 
