@@ -132,6 +132,8 @@ local config = {
       n = {
         ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
 
+        ["<leader>]"] = { ":vsp<cr> :lua vim.lsp.buf.definition()<cr>", desc = "Definition in a new split" },
+
         -- ["<leader>lf"] = false -- disable formatting keymap
       },
     },
