@@ -55,6 +55,7 @@ local config = {
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
+      autoread = true,
       relativenumber = true, -- sets vim.opt.relativenumber
       tabstop = 4,
       shiftwidth = 4,
