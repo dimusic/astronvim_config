@@ -8,7 +8,7 @@ local lspkind = require "lspkind"
 -- local cmp_compare = require "cmp.config.compare"
 
 local source_mapping = {
-  cmp_tabnine = "[TN]",
+  -- cmp_tabnine = "[TN]",
   nvim_lsp = "λ",
   vsnip = "⋗",
   buffer = "Ω",
@@ -222,12 +222,12 @@ local config = {
         "ray-x/lsp_signature.nvim",
         config = function() require("lsp_signature").setup {} end,
       },
-      {
-        "tzachar/cmp-tabnine",
-        run = "./install.sh",
-        requires = "hrsh7th/nvim-cmp",
-        config = function() astronvim.add_user_cmp_source "cmp_tabnine" end,
-      },
+      -- {
+      --   "tzachar/cmp-tabnine",
+      --   run = "./install.sh",
+      --   requires = "hrsh7th/nvim-cmp",
+      --   config = function() astronvim.add_user_cmp_source "cmp_tabnine" end,
+      -- },
 
       {
         "anuvyklack/windows.nvim",
@@ -376,7 +376,7 @@ local config = {
   -- true == 1000
   cmp = {
     source_priority = {
-      cmp_tabnine = 1200,
+      -- cmp_tabnine = 1200,
       nvim_lsp = 1000,
       nvim_lsp_signature_help = 900,
       luasnip = 750,
