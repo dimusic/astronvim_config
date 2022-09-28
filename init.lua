@@ -5,7 +5,7 @@
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
 local lspkind = require "lspkind"
--- local cmp_compare = require "cmp.config.compare"
+local cmp_compare = require "cmp.config.compare"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
@@ -55,6 +55,7 @@ local config = {
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
+      autoread = true,
       relativenumber = true, -- sets vim.opt.relativenumber
       tabstop = 4,
       shiftwidth = 4,
@@ -341,20 +342,32 @@ local config = {
         end,
       },
 
-      -- sorting = {
-      --   priority_weight = 2,
-      --   comparators = {
-      --     require "cmp_tabnine.compare",
-      --     cmp_compare.offset,
-      --     cmp_compare.exact,
-      --     cmp_compare.score,
-      --     cmp_compare.recently_used,
-      --     cmp_compare.kind,
-      --     cmp_compare.sort_text,
-      --     cmp_compare.length,
-      --     cmp_compare.order,
-      --   },
-      -- },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          -- compare.score_offset, -- not good at all
+          cmp_compare.locality,
+          cmp_compare.recently_used,
+          cmp_compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+          cmp_compare.offset,
+          cmp_compare.order,
+          -- compare.scopes, -- what?
+          -- compare.sort_text,
+          -- compare.exact,
+          -- compare.kind,
+          -- compare.length, -- useless
+
+          -- require "cmp_tabnine.compare",
+          -- cmp_compare.offset,
+          -- cmp_compare.exact,
+          -- cmp_compare.score,
+          -- cmp_compare.recently_used,
+          -- cmp_compare.kind,
+          -- cmp_compare.sort_text,
+          -- cmp_compare.length,
+          -- cmp_compare.order,
+        },
+      },
     },
 
     cinnamon = {
