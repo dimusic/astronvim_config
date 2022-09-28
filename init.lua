@@ -247,12 +247,16 @@ local config = {
     },
 
     ["neo-tree"] = {
-      enable_diagnostics = true,
+      enable_diagnostics = false,
       filesystem = {
         follow_current_file = false,
         filtered_items = {
-          visible = true,
+          visible = false,
           hide_dotfiles = false,
+          hide_gitignored = true,
+          always_show = {
+            ".env",
+          },
         },
       },
     },
