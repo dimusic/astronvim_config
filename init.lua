@@ -447,6 +447,20 @@ local config = {
       { noremap = true, silent = true, desc = "Reveal File in the Explorer" }
     )
 
+    vim.api.nvim_set_keymap(
+      "n",
+      "<S-h>",
+      "<cmd>:lua require('smart-splits').move_cursor_left()<cr>",
+      { noremap = true, silent = true, desc = "Move to left split" }
+    )
+
+    vim.api.nvim_set_keymap(
+      "n",
+      "<S-l>",
+      "<cmd>:lua require('smart-splits').move_cursor_right()<cr>",
+      { noremap = true, silent = true, desc = "Move to right split" }
+    )
+
     vim.cmd [[
 set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
