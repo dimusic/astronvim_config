@@ -64,7 +64,7 @@ local config = {
     g = {
       mapleader = " ", -- sets vim.g.mapleader
       everforest_better_performance = 1,
-      everforest_background = "medium",
+      everforest_background = "hard",
     },
   },
 
