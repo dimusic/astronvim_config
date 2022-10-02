@@ -440,6 +440,9 @@ local config = {
 
     --Disable esc key mapping in terminal
     vim.keymap.del("t", "<esc>")
+
+    vim.api.nvim_set_keymap("n", "<leader><leader>", "<C-^>", { noremap = true })
+
     vim.api.nvim_set_keymap(
       "n",
       "<leader>o",
