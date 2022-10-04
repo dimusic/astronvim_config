@@ -245,6 +245,12 @@ local config = {
       },
 
       { "vim-scripts/zoom.vim" },
+
+      {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function() require("trouble").setup {} end,
+      },
     },
 
     ["neo-tree"] = {
@@ -483,6 +489,21 @@ local config = {
       "<leader>d",
       '"_d<cr>',
       { noremap = true, silent = true, desc = "Delete without copy" }
+    )
+
+    -- Trouble keybinds
+    vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>xw",
+      "<cmd>TroubleToggle workspace_diagnostics<cr>",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>xd",
+      "<cmd>TroubleToggle workspace_diagnostics<cr>",
+      { noremap = true, silent = true }
     )
 
     vim.cmd [[
