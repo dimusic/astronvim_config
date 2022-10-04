@@ -464,6 +464,27 @@ local config = {
       { noremap = true, silent = true, desc = "Move to right split" }
     )
 
+    vim.api.nvim_set_keymap(
+      "x",
+      "<leader>p",
+      '"_dP<cr>',
+      { noremap = true, silent = true, desc = "Paste without copy" }
+    )
+
+    vim.api.nvim_set_keymap(
+      "n",
+      "<leader>d",
+      '"_d<cr>',
+      { noremap = true, silent = true, desc = "Delete without copy" }
+    )
+
+    vim.api.nvim_set_keymap(
+      "v",
+      "<leader>d",
+      '"_d<cr>',
+      { noremap = true, silent = true, desc = "Delete without copy" }
+    )
+
     vim.cmd [[
 set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
