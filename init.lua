@@ -505,6 +505,7 @@ local config = {
       "<cmd>TroubleToggle workspace_diagnostics<cr>",
       { noremap = true, silent = true }
     )
+    vim.api.nvim_set_keymap("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { noremap = true, silent = true })
 
     vim.cmd [[
 set signcolumn=yes
