@@ -91,7 +91,7 @@ local config = {
       -- bg = "#1e222a",
     },
 
-    highlights = function(h1)
+    highlights = function(hl)
       local C = require "default_theme.colors"
 
       hl.Normal = { fg = C.fg, bg = C.bg }
