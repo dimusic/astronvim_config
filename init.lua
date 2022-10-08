@@ -104,7 +104,7 @@ local config = {
 
       return hl
     end,
-     
+
     -- enable or disable highlighting for extra plugins
     plugins = {
       aerial = true,
@@ -140,7 +140,7 @@ local config = {
     servers = {
       -- "pyright"
     },
-    
+
     mappings = {
       n = {
         ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
@@ -153,9 +153,9 @@ local config = {
       format_on_save = true,
       disabled = {
         "tsserver",
-      }
+      },
     },
-    
+
     ["server-settings"] = {
       -- example for addings schemas to yamlls
       -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
@@ -188,8 +188,7 @@ local config = {
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
       ["<C-w>z"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize window" },
     },
-    t = {
-    },
+    t = {},
   },
 
   -- Configure plugins
@@ -286,7 +285,7 @@ local config = {
     },
 
     ["mason-null-ls"] = {
-      ensure_installed = { "prettierd"  }
+      ensure_installed = { "prettierd" },
     },
 
     -- Aerial
