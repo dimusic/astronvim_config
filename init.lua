@@ -36,7 +36,6 @@ local config = {
     -- },
   },
 
-  -- Set colorscheme to use
   colorscheme = "everforest",
 
   -- Override highlight groups in any theme
@@ -45,14 +44,13 @@ local config = {
     --   Normal = { bg = "#000000" },
     -- },
     default_theme = function(highlights) -- or a function that returns a new table of colors to set
-      local C = require "default_theme.colors"
-
-      highlights.Normal = { fg = C.fg, bg = C.bg }
-      return highlights
+      -- local C = require "default_theme.colors"
+      --
+      -- highlights.Normal = { fg = C.fg, bg = C.bg }
+      -- return highlights
     end,
   },
 
-  -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
       autoread = true,
@@ -63,12 +61,15 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
+      cmp_enabled = true,
+      autopairs_enabled = true,
+      diagnostics_enabled = true,
+      status_diagnostics_enabled = true,
       everforest_better_performance = 1,
       everforest_background = "hard",
     },
   },
 
-  -- Set dashboard header
   header = {
     " █████  ███████ ████████ ██████   ██████",
     "██   ██ ██         ██    ██   ██ ██    ██",
@@ -83,15 +84,27 @@ local config = {
     "    ██   ████   ████   ██ ██      ██",
   },
 
-  -- Default theme configuration
   default_theme = {
-    -- set the highlight style for diagnostic messages
-    diagnostics_style = { italic = true },
-    -- Modify the color palette for the default theme
+    -- diagnostics_style = { italic = true },
     colors = {
-      fg = "#abb2bf",
-      bg = "#1e222a",
+      -- fg = "#abb2bf",
+      -- bg = "#1e222a",
     },
+
+    highlights = function(h1)
+      local C = require "default_theme.colors"
+
+      hl.Normal = { fg = C.fg, bg = C.bg }
+
+      -- New approach instead of diagnostic_style
+      hl.DiagnosticError.italic = true
+      hl.DiagnosticHint.italic = true
+      hl.DiagnosticInfo.italic = true
+      hl.DiagnosticWarn.italic = true
+
+      return hl
+    end,
+     
     -- enable or disable highlighting for extra plugins
     plugins = {
       aerial = true,
@@ -124,30 +137,25 @@ local config = {
   lsp = {
     skip_setup = { "rust_analyzer" },
 
-    -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
     },
-    -- easily add or disable built in mappings added during LSP attaching
+    
     mappings = {
       n = {
         ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
 
         ["<leader>]"] = { ":vsp<cr> :lua vim.lsp.buf.definition()<cr>", desc = "Definition in a new split" },
-
-        -- ["<leader>lf"] = false -- disable formatting keymap
       },
     },
-    -- add to the global LSP on_attach function
-    -- on_attach = function(client, bufnr)
-    -- end,
 
-    -- override the mason server-registration function
-    -- server_registration = function(server, opts)
-    --   require("lspconfig")[server].setup(opts)
-    -- end,
-
-    -- Add overrides for LSP server settings, the keys are the name of the server
+    formatting = {
+      format_on_save = true,
+      disabled = {
+        "tsserver",
+      }
+    },
+    
     ["server-settings"] = {
       -- example for addings schemas to yamlls
       -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
@@ -170,13 +178,7 @@ local config = {
     },
   },
 
-  -- Mapping data with "desc" stored directly by vim.keymap.set().
-  --
-  -- Please use this mappings table to set keyboard mapping since this is the
-  -- lower level configuration and more robust one. (which-key will
-  -- automatically pick-up stored data by this setting.)
   mappings = {
-    -- first key is the mode
     n = {
       -- second key is the lefthand side of the map
       -- mappings seen under group name "Buffer"
@@ -184,14 +186,9 @@ local config = {
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-      -- quick save
-      -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
-
       ["<C-w>z"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize window" },
     },
     t = {
-      -- setting a mapping to false will disable it
-      -- ["<esc>"] = false,
     },
   },
 
@@ -268,9 +265,7 @@ local config = {
       },
     },
 
-    -- All other entries override the require("<key>").setup({...}) call for default plugins
-    ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
-      -- config variable is the default configuration table for the setup functino call
+    ["null-ls"] = function(config)
       local null_ls = require "null-ls"
       -- Check supported formatters and linters
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
@@ -280,33 +275,18 @@ local config = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.prettierd.with { extra_args = { "--print-width=120", "--tab-width=4" } },
       }
-      -- set up null-ls's on_attach function
-      -- NOTE: You can remove this on attach function to disable format on save
-      config.on_attach = function(client)
-        -- if client.resolved_capabilities.document_formatting then
-        --   vim.api.nvim_create_autocmd("BufWritePre", {
-        --     desc = "Auto format before save",
-        --     pattern = "<buffer>",
-        --     callback = vim.lsp.buf.formatting_sync,
-        --   })
-        -- end
-      end
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
-    treesitter = { -- overrides `require("treesitter").setup(...)`
-      ensure_installed = { "lua" },
+    treesitter = {
+      -- ensure_installed = { "lua" },
     },
     -- use mason-lspconfig to configure LSP installations
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-      ensure_installed = { "rust_analyzer" },
+      -- ensure_installed = { "" },
     },
 
-    -- use mason-tool-installer to configure DAP/Formatters/Linter installation
-    ["mason-tool-installer"] = { -- overrides `require("mason-tool-installer").setup(...)`
-      ensure_installed = { "prettierd" },
-    },
-    packer = { -- overrides `require("packer").setup(...)`
-      compile_path = vim.fn.stdpath "data" .. "/packer_compiled.lua",
+    ["mason-null-ls"] = {
+      ensure_installed = { "prettierd"  }
     },
 
     -- Aerial
@@ -414,16 +394,10 @@ local config = {
     },
   },
 
-  -- Modify which-key registration (Use this with mappings table in the above.)
   ["which-key"] = {
-    -- Add bindings which show up as group name
     register_mappings = {
-      -- first key is the mode, n == normal mode
       n = {
-        -- second key is the prefix, <leader> prefixes
         ["<leader>"] = {
-          -- third key is the key to bring up next level and its displayed
-          -- group name in which-key top level menu
           ["b"] = { name = "Buffer" },
         },
       },
@@ -510,19 +484,6 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
     end
 
     vim.g.neovide_remember_window_size = true
-
-    -- Set up custom filetypes
-    -- vim.filetype.add {
-    --   extension = {
-    --     foo = "fooscript",
-    --   },
-    --   filename = {
-    --     ["Foofile"] = "fooscript",
-    --   },
-    --   pattern = {
-    --     ["~/%.config/foo/.*"] = "fooscript",
-    --   },
-    -- }
   end,
 }
 
