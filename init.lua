@@ -364,6 +364,10 @@ local config = {
     cinnamon = {
       default_delay = 3,
     },
+    
+    ["smart-splits"] = {
+        tmux_integration = false,
+    }
   },
 
   -- LuaSnip Options
