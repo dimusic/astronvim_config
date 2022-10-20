@@ -230,7 +230,7 @@ local config = {
         "anuvyklack/windows.nvim",
         requires = {
           "anuvyklack/middleclass",
-          "anuvyklack/animation.nvim",
+          -- "anuvyklack/animation.nvim",
         },
         config = function()
           vim.o.winwidth = 10
@@ -364,10 +364,10 @@ local config = {
     cinnamon = {
       default_delay = 3,
     },
-    
+
     ["smart-splits"] = {
-        tmux_integration = false,
-    }
+      tmux_integration = false,
+    },
   },
 
   -- LuaSnip Options
