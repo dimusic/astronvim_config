@@ -43,6 +43,10 @@ local config = {
     -- duskfox = { -- a table of overrides/changes to the default
     --   Normal = { bg = "#000000" },
     -- },
+    everforest = {
+      Normal = { bg = nil },
+      EndOfBuffer = { bg = nil },
+    },
     default_theme = function(highlights) -- or a function that returns a new table of colors to set
       -- local C = require "default_theme.colors"
       --
