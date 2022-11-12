@@ -372,6 +372,10 @@ local config = {
     ["smart-splits"] = {
       tmux_integration = false,
     },
+
+    notify = {
+      background_colour = "#00000",
+    },
   },
 
   -- LuaSnip Options
