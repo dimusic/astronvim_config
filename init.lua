@@ -37,6 +37,7 @@ local config = {
   },
 
   colorscheme = "everforest",
+  -- colorscheme = "onedark",
 
   -- Override highlight groups in any theme
   highlights = {
@@ -44,6 +45,10 @@ local config = {
     --   Normal = { bg = "#000000" },
     -- },
     everforest = {
+      Normal = { bg = nil },
+      EndOfBuffer = { bg = nil },
+    },
+    onedark = {
       Normal = { bg = nil },
       EndOfBuffer = { bg = nil },
     },
@@ -199,6 +204,8 @@ local config = {
   plugins = {
     init = {
       { "sainnhe/everforest" },
+      { "joshdick/onedark.vim" },
+
       { "RRethy/vim-illuminate" },
       {
         "simrat39/rust-tools.nvim",
