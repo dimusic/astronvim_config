@@ -228,10 +228,13 @@ local config = {
         end,
       },
 
-      {
-        "ray-x/lsp_signature.nvim",
-        config = function() require("lsp_signature").setup {} end,
-      },
+      -- {
+      --   "ray-x/lsp_signature.nvim",
+      --   config = function() require("lsp_signature").setup {} end,
+      -- },
+
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
+
       -- {
       --   "tzachar/cmp-tabnine",
       --   run = "./install.sh",
@@ -328,6 +331,10 @@ local config = {
     },
 
     cmp = {
+      sources = {
+        { name = "nvim_lsp_signature_help" },
+      },
+
       formatting = {
         fields = { "menu", "abbr", "kind" },
         format = function(entry, vim_item)
@@ -372,10 +379,6 @@ local config = {
       --     -- cmp_compare.order,
       --   },
       -- },
-    },
-
-    cinnamon = {
-      default_delay = 3,
     },
 
     ["smart-splits"] = {
