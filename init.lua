@@ -9,10 +9,11 @@ local lspkind = require "lspkind"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
+  nvim_lsp_signature_help = "🐣",
   nvim_lsp = "λ",
   vsnip = "⋗",
   buffer = "Ω",
-  path = "🖫",
+  path = "📁",
 }
 
 local config = {
