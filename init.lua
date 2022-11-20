@@ -231,12 +231,9 @@ local config = {
         end,
       },
 
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   config = function() require("lsp_signature").setup {} end,
-      -- },
-
-      { "hrsh7th/cmp-nvim-lsp-signature-help" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help", requires = {
+        "hrsh7th/nvim-cmp",
+      } },
 
       -- {
       --   "tzachar/cmp-tabnine",
