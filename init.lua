@@ -9,10 +9,10 @@ local lspkind = require "lspkind"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
-  nvim_lsp_signature_help = "🐣",
-  nvim_lsp = "λ",
+  nvim_lsp_signature_help = "🐷",
+  nvim_lsp = "λsp",
   vsnip = "⋗",
-  buffer = "Ω",
+  buffer = "🍌buf",
   path = "📁",
 }
 
@@ -37,7 +37,8 @@ local config = {
     -- },
   },
 
-  colorscheme = "everforest",
+  colorscheme = "rose-pine",
+  -- colorscheme = "everforest",
   -- colorscheme = "onedark",
 
   -- Override highlight groups in any theme
@@ -206,6 +207,7 @@ local config = {
     init = {
       { "sainnhe/everforest" },
       { "joshdick/onedark.vim" },
+      { "rose-pine/neovim" },
 
       { "xiyaowong/nvim-transparent" },
 
