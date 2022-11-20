@@ -6,15 +6,23 @@
 -- where a value with no key simply has an implicit numeric key
 local lspkind = require "lspkind"
 -- local cmp_compare = require "cmp.config.compare"
+local cmp = require "cmp"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
+  copilot = "🐔CO",
   nvim_lsp_signature_help = "🐷",
   nvim_lsp = "λsp",
   vsnip = "⋗",
   buffer = "🍌buf",
   path = "📁",
 }
+
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
+end
 
 local config = {
 
@@ -263,6 +271,21 @@ local config = {
         requires = "kyazdani42/nvim-web-devicons",
         config = function() require("trouble").setup {} end,
       },
+
+      -- copilot
+      -- { "github/copilot.vim" },
+      {
+        "zbirenbaum/copilot.lua",
+        event = "VimEnter",
+        config = function()
+          vim.defer_fn(function() require("copilot").setup() end, 100)
+        end,
+      },
+      {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        config = function() require("copilot_cmp").setup() end,
+      },
     },
 
     ["neo-tree"] = {
@@ -332,6 +355,7 @@ local config = {
 
     cmp = {
       sources = {
+        { name = "copilot" },
         { name = "nvim_lsp_signature_help" },
       },
 
@@ -351,6 +375,38 @@ local config = {
           vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
           return vim_item
         end,
+      },
+
+      mapping = {
+        ["<CR>"] = cmp.mapping.confirm {
+          -- this is the important line
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = false,
+        },
+        ["<Tab>"] = vim.schedule_wrap(function(fallback)
+          if cmp.visible() and has_words_before() then
+            cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+          else
+            fallback()
+          end
+        end),
+      },
+
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require("copilot_cmp.comparators").prioritize,
+          require("copilot_cmp.comparators").score,
+          -- cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
 
       -- sorting = {
@@ -409,6 +465,7 @@ local config = {
   cmp = {
     source_priority = {
       -- cmp_tabnine = 1200,
+      copilot = 1200,
       nvim_lsp = 1000,
       nvim_lsp_signature_help = 900,
       luasnip = 750,
