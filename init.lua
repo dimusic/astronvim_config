@@ -10,11 +10,11 @@ local cmp = require "cmp"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
-  copilot = "🐔CO",
-  nvim_lsp_signature_help = "🐷",
+  copilot = "cop🐔",
+  nvim_lsp_signature_help = "sign🐷",
   nvim_lsp = "λsp",
   vsnip = "⋗",
-  buffer = "🍌buf",
+  buffer = "buf🍌",
   path = "📁",
 }
 
@@ -213,6 +213,8 @@ local config = {
   -- Configure plugins
   plugins = {
     init = {
+      ["L3MON4D3/LuaSnip"] = { disable = true },
+
       { "sainnhe/everforest" },
       { "joshdick/onedark.vim" },
       { "rose-pine/neovim" },
@@ -356,7 +358,12 @@ local config = {
     cmp = {
       sources = {
         { name = "copilot" },
+        { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
+        { name = "buffer" },
+        { name = "path" },
+        -- { name = "calc" },
+        -- { name = "emoji" },
       },
 
       formatting = {
@@ -398,14 +405,12 @@ local config = {
           require("copilot_cmp.comparators").prioritize,
           require("copilot_cmp.comparators").score,
           -- cmp.config.compare.offset,
-          cmp.config.compare.exact,
-          cmp.config.compare.score,
-          cmp.config.compare.recently_used,
           cmp.config.compare.locality,
-          cmp.config.compare.kind,
-          cmp.config.compare.sort_text,
-          cmp.config.compare.length,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.score,
           cmp.config.compare.order,
+          cmp.config.compare.exact,
+          -- cmp.config.compare.kind,
         },
       },
 
@@ -452,7 +457,7 @@ local config = {
     vscode_snippet_paths = {},
     -- Extend filetypes
     filetype_extend = {
-      javascript = { "javascriptreact" },
+      -- javascript = { "javascriptreact" },
     },
   },
 
@@ -468,9 +473,9 @@ local config = {
       copilot = 1200,
       nvim_lsp = 1000,
       nvim_lsp_signature_help = 900,
-      luasnip = 750,
       buffer = 500,
       path = 250,
+      luasnip = 0,
     },
   },
 
