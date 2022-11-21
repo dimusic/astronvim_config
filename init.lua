@@ -288,6 +288,10 @@ local config = {
         after = { "copilot.lua" },
         config = function() require("copilot_cmp").setup() end,
       },
+
+      {
+        "wakatime/vim-wakatime",
+      },
     },
 
     ["neo-tree"] = {
