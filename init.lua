@@ -213,7 +213,7 @@ local config = {
   -- Configure plugins
   plugins = {
     init = {
-      ["L3MON4D3/LuaSnip"] = { disable = true },
+      -- ["L3MON4D3/LuaSnip"] = { disable = true },
 
       { "sainnhe/everforest" },
       { "joshdick/onedark.vim" },
