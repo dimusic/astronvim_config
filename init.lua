@@ -45,8 +45,8 @@ local config = {
     -- },
   },
 
-  colorscheme = "rose-pine",
-  -- colorscheme = "everforest",
+  -- colorscheme = "rose-pine",
+  colorscheme = "everforest",
   -- colorscheme = "onedark",
 
   -- Override highlight groups in any theme
