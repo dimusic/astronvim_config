@@ -307,6 +307,13 @@ local config = {
           },
         },
       },
+
+      window = {
+        mappings = {
+          H = "toggle_hidden",
+          L = false,
+        },
+      },
     },
 
     ["null-ls"] = function(config)
