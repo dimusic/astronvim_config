@@ -10,11 +10,11 @@ local cmp = require "cmp"
 
 local source_mapping = {
   -- cmp_tabnine = "[TN]",
-  copilot = "cop🐔",
-  nvim_lsp_signature_help = "sign🐷",
+  copilot = "🐔",
+  nvim_lsp_signature_help = "🐷",
   nvim_lsp = "λsp",
   vsnip = "⋗",
-  buffer = "buf🍌",
+  buffer = "🍌",
   path = "📁",
 }
 
@@ -412,6 +412,7 @@ local config = {
           require("copilot_cmp.comparators").prioritize,
           require("copilot_cmp.comparators").score,
           -- cmp.config.compare.offset,
+          cmp.config.compare.length,
           cmp.config.compare.locality,
           cmp.config.compare.recently_used,
           cmp.config.compare.score,
