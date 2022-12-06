@@ -244,6 +244,16 @@ local config = {
         "hrsh7th/nvim-cmp",
       } },
 
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+          require("treesitter-context").setup {
+            -- mode = "topline",
+            line_numbers = true,
+          }
+        end,
+      },
+
       -- {
       --   "tzachar/cmp-tabnine",
       --   run = "./install.sh",
