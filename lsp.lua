@@ -33,24 +33,5 @@ return {
                 },
             },
         },
-
-        -- example for addings schemas to yamlls
-        -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
-        --   settings = {
-        --     yaml = {
-        --       schemas = {
-        --         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
-        --         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-        --         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-        --       },
-        --     },
-        --   },
-        -- },
-        -- Example disabling formatting for a specific language server
-        -- gopls = { -- override table for require("lspconfig").gopls.setup({...})
-        --   on_attach = function(client, bufnr)
-        --     client.resolved_capabilities.document_formatting = false
-        --   end
-        -- }
     },
 }

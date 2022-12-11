@@ -1,5 +1,4 @@
--- local lsp_config = require "lsp"
--- local polish = require "polish"
+local lsp_config = require "user.lsp"
 
 local config = {
     updater = {
@@ -123,7 +122,7 @@ local config = {
     },
 
     -- Extend LSP configuration
-    -- lsp = lsp_config,
+    lsp = lsp_config,
 
     mappings = {
         n = {
@@ -175,8 +174,6 @@ local config = {
             },
         },
     },
-
-    -- polish = polish,
 }
 
 return config

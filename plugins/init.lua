@@ -1,9 +1,3 @@
-local cmp_config = require "cmp"
-local neo_tree_config = require "neo-tree"
-local aerial_config = require "aerial"
-local null_ls_config = require "null-ls"
-local telescope_config = require "telescope"
-
 local plugins = {
     { "sainnhe/everforest" },
     { "joshdick/onedark.vim" },
@@ -93,37 +87,4 @@ local plugins = {
     },
 }
 
-return {
-    init = plugins,
-
-    ["neo-tree"] = neo_tree_config,
-
-    ["null-ls"] = null_ls_config,
-
-    treesitter = {
-        ensure_installed = { "lua", "javascript", "typescript", "tsx", "json", "rust" },
-    },
-
-    ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-        -- ensure_installed = { "" },
-    },
-
-    ["mason-null-ls"] = {
-        ensure_installed = { "prettierd", "stylua" },
-    },
-
-    -- Aerial
-    aerial = aerial_config,
-
-    telescope = telescope_config,
-
-    cmp = cmp_config,
-
-    ["smart-splits"] = {
-        tmux_integration = false,
-    },
-
-    notify = {
-        background_colour = "#00000",
-    },
-}
+return plugins
