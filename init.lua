@@ -340,7 +340,7 @@ local config = {
             return config -- return final config table to use in require("null-ls").setup(config)
         end,
         treesitter = {
-            -- ensure_installed = { "lua" },
+            ensure_installed = { "lua", "javascript", "typescript", "tsx", "json", "rust" },
         },
         -- use mason-lspconfig to configure LSP installations
         ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
@@ -348,7 +348,7 @@ local config = {
         },
 
         ["mason-null-ls"] = {
-            ensure_installed = { "prettierd" },
+            ensure_installed = { "prettierd", "stylua" },
         },
 
         -- Aerial
