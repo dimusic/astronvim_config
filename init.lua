@@ -175,9 +175,22 @@ local config = {
             disabled = {
                 "tsserver",
             },
+
+            -- filter = function(client)
+            --     if client.name == "sumneko_lua" then return false end
+            -- end,
         },
 
         ["server-settings"] = {
+            lua = {
+                format = {
+                    defaultConfig = {
+                        indent_style = "space",
+                        indent_size = "4",
+                    },
+                },
+            },
+
             -- example for addings schemas to yamlls
             -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
             --   settings = {
