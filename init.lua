@@ -332,7 +332,9 @@ local config = {
             -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
             config.sources = {
                 -- Set a formatter
-                null_ls.builtins.formatting.stylua,
+                null_ls.builtins.formatting.stylua.with {
+                    extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
+                },
                 null_ls.builtins.formatting.prettierd.with { extra_args = { "--print-width=120", "--tab-width=4" } },
             }
             return config -- return final config table to use in require("null-ls").setup(config)
@@ -359,10 +361,18 @@ local config = {
             end,
             on_attach = function(_, bufnr)
                 -- Jump up the tree with '[[' or ']]'
-                vim.keymap.set("n", "[[", "<cmd>AerialPrevUp<cr>",
-                    { buffer = bufnr, desc = "Jump up and backwards in Aerial" })
-                vim.keymap.set("n", "]]", "<cmd>AerialNextUp<cr>",
-                    { buffer = bufnr, desc = "Jump up and forwards in Aerial" })
+                vim.keymap.set(
+                    "n",
+                    "[[",
+                    ":lua require('aerial').prev()<cr>",
+                    { buffer = bufnr, desc = "Jump up and backwards in Aerial" }
+                )
+                vim.keymap.set(
+                    "n",
+                    "]]",
+                    ":lua require('aerial').next()<cr>",
+                    { buffer = bufnr, desc = "Jump up and forwards in Aerial" }
+                )
             end,
         },
 
@@ -395,8 +405,9 @@ local config = {
                         vim_item.kind = ""
                         if detail and detail:find ".*%%.*" then vim_item.kind = vim_item.kind .. " " .. detail end
 
-                        if (entry.completion_item.data or {}).multiline then vim_item.kind = vim_item.kind ..
-                            " " .. "[ML]" end
+                        if (entry.completion_item.data or {}).multiline then
+                            vim_item.kind = vim_item.kind .. " " .. "[ML]"
+                        end
                     end
                     local maxwidth = 80
                     vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
