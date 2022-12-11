@@ -1,5 +1,11 @@
 local my_plugins = require "plugins/init"
 local cmp_config = require "plugins/cmp"
+local neo_tree_config = require "plugins/neo-tree"
+local aerial_config = require "plugins/aerial"
+local null_ls_config = require "plugins/null-ls"
+local telescope_config = require "plugins/telescope"
+
+local lsp_config = require "lsp"
 local polish = require "polish"
 
 local config = {
@@ -124,62 +130,7 @@ local config = {
     },
 
     -- Extend LSP configuration
-    lsp = {
-        skip_setup = { "rust_analyzer" },
-
-        servers = {
-            -- "pyright"
-        },
-
-        mappings = {
-            n = {
-                ["<C-]>"] = { function() vim.lsp.buf.definition() end, desc = "Show the definition of current symbol" },
-
-                ["<leader>]"] = { ":vsp<cr> :lua vim.lsp.buf.definition()<cr>", desc = "Definition in a new split" },
-            },
-        },
-
-        formatting = {
-            format_on_save = true,
-            disabled = {
-                "tsserver",
-            },
-
-            -- filter = function(client)
-            --     if client.name == "sumneko_lua" then return false end
-            -- end,
-        },
-
-        ["server-settings"] = {
-            lua = {
-                format = {
-                    defaultConfig = {
-                        indent_style = "space",
-                        indent_size = "4",
-                    },
-                },
-            },
-
-            -- example for addings schemas to yamlls
-            -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
-            --   settings = {
-            --     yaml = {
-            --       schemas = {
-            --         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
-            --         ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-            --         ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-            --       },
-            --     },
-            --   },
-            -- },
-            -- Example disabling formatting for a specific language server
-            -- gopls = { -- override table for require("lspconfig").gopls.setup({...})
-            --   on_attach = function(client, bufnr)
-            --     client.resolved_capabilities.document_formatting = false
-            --   end
-            -- }
-        },
-    },
+    lsp = lsp_config,
 
     mappings = {
         n = {
@@ -198,46 +149,14 @@ local config = {
     plugins = {
         init = my_plugins,
 
-        ["neo-tree"] = {
-            enable_diagnostics = false,
-            filesystem = {
-                follow_current_file = false,
-                filtered_items = {
-                    visible = false,
-                    hide_dotfiles = false,
-                    hide_gitignored = true,
-                    always_show = {
-                        ".env",
-                    },
-                },
-            },
+        ["neo-tree"] = neo_tree_config,
 
-            window = {
-                mappings = {
-                    H = "toggle_hidden",
-                    L = false,
-                },
-            },
-        },
+        ["null-ls"] = null_ls_config,
 
-        ["null-ls"] = function(config)
-            local null_ls = require "null-ls"
-            -- Check supported formatters and linters
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-            config.sources = {
-                -- Set a formatter
-                null_ls.builtins.formatting.stylua.with {
-                    extra_args = { "--indent-type", "Spaces", "--indent-width", "4" },
-                },
-                null_ls.builtins.formatting.prettierd.with { extra_args = { "--print-width=120", "--tab-width=4" } },
-            }
-            return config -- return final config table to use in require("null-ls").setup(config)
-        end,
         treesitter = {
             ensure_installed = { "lua", "javascript", "typescript", "tsx", "json", "rust" },
         },
-        -- use mason-lspconfig to configure LSP installations
+
         ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
             -- ensure_installed = { "" },
         },
@@ -247,40 +166,9 @@ local config = {
         },
 
         -- Aerial
-        aerial = {
-            on_first_symbols = function(bufnr)
-                -- local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-                -- if ft == "lua" then
-                require("aerial").tree_set_collapse_level(bufnr, 1)
-                -- end
-            end,
-            on_attach = function(_, bufnr)
-                -- Jump up the tree with '[[' or ']]'
-                vim.keymap.set(
-                    "n",
-                    "[[",
-                    ":lua require('aerial').prev()<cr>",
-                    { buffer = bufnr, desc = "Jump up and backwards in Aerial" }
-                )
-                vim.keymap.set(
-                    "n",
-                    "]]",
-                    ":lua require('aerial').next()<cr>",
-                    { buffer = bufnr, desc = "Jump up and forwards in Aerial" }
-                )
-            end,
-        },
+        aerial = aerial_config,
 
-        telescope = {
-            defaults = {
-                sorting_strategy = "descending",
-                layout_config = {
-                    horizontal = {
-                        prompt_position = "bottom",
-                    },
-                },
-            },
-        },
+        telescope = telescope_config,
 
         cmp = cmp_config,
 
