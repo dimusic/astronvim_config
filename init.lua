@@ -1,34 +1,8 @@
 local my_plugins = require "plugins/init"
-
---              AstroNvim Configuration Table
--- All configuration changes should go inside of the table below
-
--- You can think of a Lua "table" as a dictionary like data structure the
--- normal format is "key = value". These also handle array like data structures
--- where a value with no key simply has an implicit numeric key
-local lspkind = require "lspkind"
--- local cmp_compare = require "cmp.config.compare"
-local cmp = require "cmp"
-
-local source_mapping = {
-    -- cmp_tabnine = "[TN]",
-    copilot = "🐔",
-    nvim_lsp_signature_help = "🐷",
-    nvim_lsp = "λsp",
-    vsnip = "⋗",
-    buffer = "🍌",
-    path = "📁",
-}
-
-local has_words_before = function()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
-end
+local cmp_config = require "plugins/cmp"
+local polish = require "polish"
 
 local config = {
-
-    -- Configure AstroNvim updates
     updater = {
         remote = "origin", -- remote to use
         channel = "nightly", -- "stable" or "nightly"
@@ -40,11 +14,6 @@ local config = {
         show_changelog = true, -- show the changelog after performing an update
         auto_reload = false, -- automatically reload and sync packer after a successful update
         auto_quit = false, -- automatically quit the current session after a successful update
-        -- remotes = { -- easily add new remotes to track
-        --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
-        --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
-        --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
-        -- },
     },
 
     -- colorscheme = "rose-pine",
@@ -313,94 +282,7 @@ local config = {
             },
         },
 
-        cmp = {
-            sources = {
-                { name = "copilot" },
-                { name = "nvim_lsp_signature_help" },
-                -- { name = "calc" },
-                -- { name = "emoji" },
-            },
-
-            formatting = {
-                fields = { "menu", "abbr", "kind" },
-                format = function(entry, vim_item)
-                    vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
-                    vim_item.menu = source_mapping[entry.source.name]
-                    if entry.source.name == "cmp_tabnine" then
-                        local detail = (entry.completion_item.data or {}).detail
-                        vim_item.kind = ""
-                        if detail and detail:find ".*%%.*" then vim_item.kind = vim_item.kind .. " " .. detail end
-
-                        if (entry.completion_item.data or {}).multiline then
-                            vim_item.kind = vim_item.kind .. " " .. "[ML]"
-                        end
-                    end
-                    local maxwidth = 80
-                    vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
-                    return vim_item
-                end,
-            },
-
-            mapping = {
-                ["<CR>"] = cmp.mapping.confirm {
-                    -- this is the important line
-                    behavior = cmp.ConfirmBehavior.Replace,
-                    select = false,
-                },
-                ["<Tab>"] = vim.schedule_wrap(function(fallback)
-                    if cmp.visible() and has_words_before() then
-                        cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-                    else
-                        fallback()
-                    end
-                end),
-            },
-
-            sorting = {
-                priority_weight = 2,
-                comparators = {
-                    -- require("copilot_cmp.comparators").prioritize,
-                    -- require("copilot_cmp.comparators").score,
-
-                    -- cmp.config.compare.offset,
-                    cmp.config.compare.exact,
-                    cmp.config.compare.score,
-                    cmp.config.compare.recently_used,
-                    cmp.config.compare.locality,
-                    cmp.config.compare.kind,
-                    cmp.config.compare.sort_text,
-                    cmp.config.compare.length,
-                    cmp.config.compare.order,
-                },
-            },
-
-            -- sorting = {
-            --   priority_weight = 2,
-            --   comparators = {
-            --     -- compare.score_offset, -- not good at all
-            --     cmp_compare.locality,
-            --     cmp_compare.recently_used,
-            --     cmp_compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-            --     cmp_compare.offset,
-            --     cmp_compare.order,
-            --     -- compare.scopes, -- what?
-            --     -- compare.sort_text,
-            --     -- compare.exact,
-            --     -- compare.kind,
-            --     -- compare.length, -- useless
-            --
-            --     -- require "cmp_tabnine.compare",
-            --     -- cmp_compare.offset,
-            --     -- cmp_compare.exact,
-            --     -- cmp_compare.score,
-            --     -- cmp_compare.recently_used,
-            --     -- cmp_compare.kind,
-            --     -- cmp_compare.sort_text,
-            --     -- cmp_compare.length,
-            --     -- cmp_compare.order,
-            --   },
-            -- },
-        },
+        cmp = cmp_config,
 
         ["smart-splits"] = {
             tmux_integration = false,
@@ -449,89 +331,7 @@ local config = {
         },
     },
 
-    -- This function is run last and is a good place to configuring
-    -- augroups/autocommands and custom filetypes also this just pure lua so
-    -- anything that doesn't fit in the normal config locations above can go here
-    polish = function()
-        -- Set key binding
-        -- Set autocommands
-        vim.api.nvim_create_augroup("packer_conf", { clear = true })
-        vim.api.nvim_create_autocmd("BufWritePost", {
-            desc = "Sync packer after modifying plugins.lua",
-            group = "packer_conf",
-            pattern = "plugins.lua",
-            command = "source <afile> | PackerSync",
-        })
-
-        vim.api.nvim_set_keymap("n", "<leader><leader>", "<C-^>", { noremap = true })
-
-        vim.api.nvim_set_keymap(
-            "n",
-            "<leader>o",
-            "<cmd>Neotree reveal<cr>",
-            { noremap = true, silent = true, desc = "Reveal File in the Explorer" }
-        )
-
-        vim.api.nvim_set_keymap(
-            "n",
-            "<S-h>",
-            "<cmd>:lua require('smart-splits').move_cursor_left()<cr>",
-            { noremap = true, silent = true, desc = "Move to left split" }
-        )
-
-        vim.api.nvim_set_keymap(
-            "n",
-            "<S-l>",
-            "<cmd>:lua require('smart-splits').move_cursor_right()<cr>",
-            { noremap = true, silent = true, desc = "Move to right split" }
-        )
-
-        vim.api.nvim_set_keymap(
-            "x",
-            "<leader>p",
-            '"_dP<cr>',
-            { noremap = true, silent = true, desc = "Paste without copy" }
-        )
-
-        vim.api.nvim_set_keymap(
-            "n",
-            "<leader>d",
-            '"_d<cr>',
-            { noremap = true, silent = true, desc = "Delete without copy" }
-        )
-
-        -- Trouble keybinds
-        vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap(
-            "n",
-            "<leader>xw",
-            "<cmd>TroubleToggle workspace_diagnostics<cr>",
-            { noremap = true, silent = true }
-        )
-        vim.api.nvim_set_keymap(
-            "n",
-            "<leader>xd",
-            "<cmd>TroubleToggle workspace_diagnostics<cr>",
-            { noremap = true, silent = true }
-        )
-        vim.api.nvim_set_keymap("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { noremap = true, silent = true })
-
-        vim.cmd [[
-set signcolumn=yes
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]]
-
-        local font_size = 11
-
-        if vim.fn.has "win32" then vim.opt.guifont = { "FiraCode NF", ":h" .. font_size } end
-        if vim.loop.os_uname().sysname == "Darwin" then
-            vim.opt.guifont = { "FiraCode Nerd Font", ":h" .. (font_size + 1) }
-        end
-
-        vim.g.neovide_remember_window_size = true
-
-        vim.g.transparent_enabled = true
-    end,
+    polish = polish,
 }
 
 return config
