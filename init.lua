@@ -1,12 +1,5 @@
-local my_plugins = require "plugins/init"
-local cmp_config = require "plugins/cmp"
-local neo_tree_config = require "plugins/neo-tree"
-local aerial_config = require "plugins/aerial"
-local null_ls_config = require "plugins/null-ls"
-local telescope_config = require "plugins/telescope"
-
-local lsp_config = require "lsp"
-local polish = require "polish"
+-- local lsp_config = require "lsp"
+-- local polish = require "polish"
 
 local config = {
     updater = {
@@ -130,7 +123,7 @@ local config = {
     },
 
     -- Extend LSP configuration
-    lsp = lsp_config,
+    -- lsp = lsp_config,
 
     mappings = {
         n = {
@@ -143,42 +136,6 @@ local config = {
             ["<C-w>z"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize window" },
         },
         t = {},
-    },
-
-    -- Configure plugins
-    plugins = {
-        init = my_plugins,
-
-        ["neo-tree"] = neo_tree_config,
-
-        ["null-ls"] = null_ls_config,
-
-        treesitter = {
-            ensure_installed = { "lua", "javascript", "typescript", "tsx", "json", "rust" },
-        },
-
-        ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-            -- ensure_installed = { "" },
-        },
-
-        ["mason-null-ls"] = {
-            ensure_installed = { "prettierd", "stylua" },
-        },
-
-        -- Aerial
-        aerial = aerial_config,
-
-        telescope = telescope_config,
-
-        cmp = cmp_config,
-
-        ["smart-splits"] = {
-            tmux_integration = false,
-        },
-
-        notify = {
-            background_colour = "#00000",
-        },
     },
 
     -- LuaSnip Options
@@ -219,7 +176,7 @@ local config = {
         },
     },
 
-    polish = polish,
+    -- polish = polish,
 }
 
 return config
