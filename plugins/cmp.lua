@@ -3,7 +3,7 @@ local lspkind = require "lspkind"
 -- local cmp_compare = require "cmp.config.compare"
 
 local source_mapping = {
-    -- cmp_tabnine = "[TN]",
+    cmp_tabnine = "🐒",
     copilot = "🐔",
     nvim_lsp_signature_help = "🐷",
     nvim_lsp = "λsp",
@@ -20,7 +20,8 @@ end
 
 return {
     sources = {
-        { name = "copilot" },
+        -- { name = "copilot" },
+        { name = "cmp_tabnine" },
         { name = "nvim_lsp_signature_help" },
         -- { name = "calc" },
         -- { name = "emoji" },
@@ -61,20 +62,34 @@ return {
 
     sorting = {
         priority_weight = 2,
+        --tabnine:
         comparators = {
-            -- require("copilot_cmp.comparators").prioritize,
-            -- require("copilot_cmp.comparators").score,
-
-            cmp.config.compare.locality,
-            cmp.config.compare.score,
+            require "cmp_tabnine.compare",
             cmp.config.compare.offset,
             cmp.config.compare.exact,
+            cmp.config.compare.score,
             cmp.config.compare.recently_used,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
             cmp.config.compare.order,
         },
+
+        --default:
+        -- comparators = {
+        --     -- require("copilot_cmp.comparators").prioritize,
+        --     -- require("copilot_cmp.comparators").score,
+        --
+        --     cmp.config.compare.locality,
+        --     cmp.config.compare.score,
+        --     cmp.config.compare.offset,
+        --     cmp.config.compare.exact,
+        --     cmp.config.compare.recently_used,
+        --     cmp.config.compare.kind,
+        --     cmp.config.compare.sort_text,
+        --     cmp.config.compare.length,
+        --     cmp.config.compare.order,
+        -- },
     },
 
     -- sorting = {

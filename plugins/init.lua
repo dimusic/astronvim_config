@@ -68,18 +68,45 @@ local plugins = {
     },
 
     -- copilot
-    -- { "github/copilot.vim" },
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     event = "VimEnter",
+    --     config = function()
+    --         vim.defer_fn(function() require("copilot").setup() end, 100)
+    --     end,
+    -- },
+    -- {
+    --     "zbirenbaum/copilot-cmp",
+    --     after = { "copilot.lua" },
+    --     config = function() require("copilot_cmp").setup() end,
+    -- },
+
+    -- tabnine
     {
-        "zbirenbaum/copilot.lua",
-        event = "VimEnter",
+        "tzachar/cmp-tabnine",
+        run = "./install.sh",
+        requires = "hrsh7th/nvim-cmp",
         config = function()
-            vim.defer_fn(function() require("copilot").setup() end, 100)
+            local tabnine = require "cmp_tabnine.config"
+
+            tabnine:setup {
+                max_num_results = 3,
+            }
+
+            -- tabnine:setup {
+            --     -- max_lines = 1000,
+            --     max_num_results = 3,
+            --     sort = true,
+            --     -- run_on_every_keystroke = true,
+            --     snippet_placeholder = "..",
+            --     ignored_file_types = {
+            --         -- default is not to ignore
+            --         -- uncomment to ignore in lua:
+            --         -- lua = true
+            --     },
+            --     show_prediction_strength = true,
+            -- }
         end,
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
-        config = function() require("copilot_cmp").setup() end,
     },
 
     {
