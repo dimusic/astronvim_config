@@ -18,20 +18,8 @@ local config = {
     colorscheme = "everforest",
     -- colorscheme = "onedark",
 
-    -- Override highlight groups in any theme
     highlights = {
-        -- duskfox = { -- a table of overrides/changes to the default
-        --   Normal = { bg = "#000000" },
-        -- },
-        -- everforest = {
-        --   Normal = { bg = nil },
-        --   EndOfBuffer = { bg = nil },
-        -- },
-        -- onedark = {
-        --   Normal = { bg = nil },
-        --   EndOfBuffer = { bg = nil },
-        -- },
-        default_theme = function(highlights) -- or a function that returns a new table of colors to set
+        default_theme = function(highlights)
             -- local C = require "default_theme.colors"
             --
             -- highlights.Normal = { fg = C.fg, bg = C.bg }
