@@ -83,6 +83,10 @@ local plugins = {
     },
 
     {
+        "karb94/neoscroll.nvim",
+    },
+
+    {
         "wakatime/vim-wakatime",
     },
 }

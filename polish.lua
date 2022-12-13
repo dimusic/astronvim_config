@@ -77,6 +77,13 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
     vim.g.neovide_remember_window_size = true
 
     vim.g.transparent_enabled = true
+
+    require("neoscroll").setup {
+        mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+        stop_eof = true,
+        hide_cursor = true,
+        performance_mode = false,
+    }
 end
 
 return polish
