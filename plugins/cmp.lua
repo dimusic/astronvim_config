@@ -45,20 +45,20 @@ return {
         end,
     },
 
-    mapping = {
-        ["<CR>"] = cmp.mapping.confirm {
-            -- this is the important line
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false,
-        },
-        ["<Tab>"] = vim.schedule_wrap(function(fallback)
-            if cmp.visible() and has_words_before() then
-                cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-            else
-                fallback()
-            end
-        end),
-    },
+    -- mapping = {
+    --     ["<CR>"] = cmp.mapping.confirm {
+    --         -- this is the important line
+    --         behavior = cmp.ConfirmBehavior.Replace,
+    --         select = false,
+    --     },
+    --     ["<Tab>"] = vim.schedule_wrap(function(fallback)
+    --         if cmp.visible() and has_words_before() then
+    --             cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+    --         else
+    --             fallback()
+    --         end
+    --     end),
+    -- },
 
     sorting = {
         priority_weight = 2,
