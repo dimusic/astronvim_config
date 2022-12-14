@@ -34,6 +34,12 @@ local config = {
             tabstop = 4,
             shiftwidth = 4,
             completeopt = { "menuone", "noselect", "noinsert" },
+
+            swapfile = false,
+            backup = false,
+            scrolloff = 8,
+            updatetime = 100,
+            colorcolumn = "120",
         },
         g = {
             mapleader = " ", -- sets vim.g.mapleader
