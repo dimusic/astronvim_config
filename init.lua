@@ -127,6 +127,7 @@ local config = {
             ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
             ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
             ["<C-w>z"] = { "<cmd>WindowsMaximize<cr>", desc = "Maximize window" },
+            ["<C-p>"] = { function() require("telescope.builtin").git_files() end, desc = "Search git files" },
         },
         t = {},
     },
